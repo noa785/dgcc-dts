@@ -1,0 +1,58 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg:        #080b10;
+    --surface:   #111620;
+    --surface-2: #161d2e;
+    --surface-3: #1c2540;
+    --border:    #1f2d45;
+    --border-2:  #263350;
+    --text:      #e2e8f5;
+    --text-2:    #8b97b5;
+    --text-3:    #4d5a78;
+    --accent:    #3b82f6;
+    --accent-2:  #6366f1;
+    --green:     #10b981;
+    --red:       #ef4444;
+    --amber:     #f59e0b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+}
+
+@layer components {
+  .pes-card {
+    @apply bg-[#111620] border border-[#1f2d45] rounded-xl overflow-hidden;
+  }
+  .pes-input {
+    @apply w-full bg-[#161d2e] border border-[#1f2d45] text-slate-200 rounded-lg px-3 py-2
+           text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30
+           transition-colors placeholder:text-slate-600 font-sans;
+  }
+  .pes-btn {
+    @apply inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium
+           transition-all cursor-pointer border-0 font-sans;
+  }
+  .pes-btn-primary {
+    @apply pes-btn bg-blue-500 text-white hover:bg-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)];
+  }
+  .pes-btn-ghost {
+    @apply pes-btn bg-transparent text-slate-400 border border-[#263350] hover:bg-[#161d2e] hover:text-slate-200;
+  }
+  .pes-btn-danger {
+    @apply pes-btn bg-red-500 text-white hover:bg-red-600;
+  }
+  .pes-label {
+    @apply text-[10.5px] uppercase tracking-wider font-semibold text-slate-500;
+  }
+}
