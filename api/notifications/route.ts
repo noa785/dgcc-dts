@@ -1,13 +1,13 @@
 // src/app/api/notifications/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma/client";
-import { getServerUser } from "@/lib/auth/server";
+import { getSession } from "@/lib/auth/session";
 import { runBusinessRules } from "@/lib/business-logic/rules-engine";
 
 // GET: Fetch notifications for current user
 export async function GET(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { searchParams } = new URL(req.url);
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
 // PATCH: Mark notification(s) as read
 export async function PATCH(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
@@ -77,7 +77,7 @@ export async function PATCH(req: NextRequest) {
 // POST: Manually trigger business rules
 export async function POST(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Only admins can trigger rules manually

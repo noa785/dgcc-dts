@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma/client";
-import { getServerUser } from '@/lib/auth/session'
+import { getSession } from '@/lib/auth/session'
 
 // GET: List saved views for current user
 export async function GET(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const views = await prisma.savedView.findMany({
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 // POST: Create saved view
 export async function POST(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 // DELETE: Delete saved view
 export async function DELETE(req: NextRequest) {
   try {
-    const user = await getServerUser();
+    const user = await getSession();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { searchParams } = new URL(req.url);
