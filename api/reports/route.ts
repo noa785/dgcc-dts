@@ -186,7 +186,7 @@ async function generateGovernanceReport(filters: ReturnType<typeof parseFilters>
   const items = await prisma.governanceItem.findMany({
     where: govWhere,
     include: { unit: true },
-    orderBy: { reviewDate: "desc" },
+    orderBy: { createdAt: "desc" },
   });
 
   const wb = new ExcelJS.Workbook();
@@ -213,7 +213,7 @@ async function generateGovernanceReport(filters: ReturnType<typeof parseFilters>
       type: g.type || "—",
       status: g.status,
       evidence: g.evidenceStatus || "—",
-      reviewDate: g.reviewDate ? new Date(g.reviewDate).toLocaleDateString("en-SA") : "—",
+      reviewDate: g.effectiveDate ? new Date(g.effectiveDate).toLocaleDateString("en-SA") : "—",
       nextReview: g.nextReviewDate ? new Date(g.nextReviewDate).toLocaleDateString("en-SA") : "—",
       compliance: g.complianceScore ?? "—",
     });
@@ -416,7 +416,7 @@ async function getPreviewData(type: string, filters: ReturnType<typeof parseFilt
       return prisma.governanceItem.findMany({
         where: govWhere,
         include: { unit: true },
-        orderBy: { reviewDate: "desc" },
+        orderBy: { createdAt: "desc" },
         take: 50,
       });
     }
