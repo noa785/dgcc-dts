@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma/client";
-import { getServerUser } from "@/lib/auth/server";
+import { getServerUser } from '@/lib/auth/session'
 
 // GET: List saved views for current user
 export async function GET(req: NextRequest) {

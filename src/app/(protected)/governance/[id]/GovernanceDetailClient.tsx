@@ -72,7 +72,7 @@ export default function GovernanceDetailClient({ item, canEdit, canApprove = fal
   const handleTaskApprove = async (taskId: string, action: 'APPROVE' | 'REJECT') => {
     setTaskActionState(s => ({ ...s, [taskId]: 'loading' }));
     try {
-      const r = await fetch(\`/api/gov-tasks/\${taskId}/approve\`, {
+      const r = await fetch(`/api/gov-tasks/${taskId}/approve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action }),
