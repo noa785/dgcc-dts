@@ -1,4 +1,5 @@
 // src/app/page.tsx — Root redirect
+export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 

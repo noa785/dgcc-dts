@@ -20,7 +20,6 @@ export default async function GovernanceDetailPage({ params }: { params: { id: s
       unit:       { select: { id: true, code: true, name: true, colorHex: true } },
       owner:      { select: { id: true, name: true, email: true } },
       reviewer:   { select: { id: true, name: true } },
-      createdBy:  { select: { name: true } },
       govTasks: {
         where: { isDeleted: false },
         include: {
@@ -80,7 +79,7 @@ export default async function GovernanceDetailPage({ params }: { params: { id: s
         unitColor:        item.unit?.colorHex ?? null,
         ownerName:        item.owner?.name ?? null,
         reviewerName:     item.reviewer?.name ?? null,
-        createdByName:    item.createdBy?.name ?? null,
+        createdByName:    null,
         createdAt:        item.createdAt.toISOString(),
         updatedAt:        item.updatedAt.toISOString(),
         govTasks: item.govTasks.map(t => ({

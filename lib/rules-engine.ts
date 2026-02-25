@@ -26,7 +26,7 @@ export async function runBusinessRules(): Promise<RuleResult> {
   const overdueOrders = await prisma.order.findMany({
     where: {
       dueDate: { lt: now },
-      status: { notIn: ["COMPLETED", "CANCELLED", "DELAYED"] },
+      status: { notIn: ["DONE", "CANCELLED", "ON_HOLD"] },
       isDeleted: false,
     },
     include: {
@@ -39,7 +39,7 @@ export async function runBusinessRules(): Promise<RuleResult> {
     // Update status to DELAYED
     await prisma.order.update({
       where: { id: order.id },
-      data: { status: "DELAYED" },
+      data: { status: "ON_HOLD" },
     });
 
     const daysOverdue = Math.ceil(
@@ -67,7 +67,7 @@ export async function runBusinessRules(): Promise<RuleResult> {
   const dueSoonOrders = await prisma.order.findMany({
     where: {
       dueDate: { gte: now, lte: sevenDays },
-      status: { notIn: ["COMPLETED", "CANCELLED"] },
+      status: { notIn: ["DONE", "CANCELLED"] },
       isDeleted: false,
     },
     include: {
@@ -111,7 +111,7 @@ export async function runBusinessRules(): Promise<RuleResult> {
   const govOverdue = await prisma.governanceItem.findMany({
     where: {
       nextReviewDate: { lt: now },
-      status: { notIn: ["ARCHIVED", "RETIRED"] },
+      status: { notIn: ["ARCHIVED", "SUPERSEDED"] },
     },
     include: {
       owner: { select: { id: true } },
@@ -154,7 +154,7 @@ export async function runBusinessRules(): Promise<RuleResult> {
   const govDueSoon = await prisma.governanceItem.findMany({
     where: {
       nextReviewDate: { gte: now, lte: fourteenDays },
-      status: { notIn: ["ARCHIVED", "RETIRED"] },
+      status: { notIn: ["ARCHIVED", "SUPERSEDED"] },
     },
     include: {
       owner: { select: { id: true } },
