@@ -17,7 +17,7 @@ export async function getSession(): Promise<AuthUser | null> {
     if (!user) return null;
 
     const dbUser = await prisma.user.findUnique({
-      where: { supabaseId: user.id },
+      where: { email: user.email! },
       select: {
         id: true,
         email: true,
